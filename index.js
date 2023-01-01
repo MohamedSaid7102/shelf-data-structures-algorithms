@@ -3,13 +3,27 @@ exports.__esModule = true;
 var SingleLinkedList_1 = require("./src/SingleLinkedList");
 try {
     var myList = new SingleLinkedList_1.LinkedList();
-    // hello wolrd
-    // myList.unshift(1).unshift(0).unshift(-1).push(2).push(3).push(4);
-    myList.insert('Halah', 0);
-    myList.insert('Mohamed', 1);
-    myList.push('Soso');
-    myList.unshift('Mohamed');
-    // myList.insert('POPO', 9);
+    myList.insert('Mohamed', 0);
+    myList.insert('Halah', 1);
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+    myList.print();
+    myList.push(1);
+    myList.push(2);
+    myList.push(3);
+    myList.push(4);
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
     myList.print();
 }
 catch (error) {
