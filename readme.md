@@ -10,10 +10,14 @@
 
 ## Doing
 
-- `Linked Lists`
-  - `Single Linked Lists`
-  - `Double Linked Lists`
-  - `Circular Linked Lists`
+- `Linked Lists`: ( `Single` - `Double` - `Circular` );
+  - Methods:
+    - `push()`
+    - `pop()`
+    - `shift()`
+    - `unshift()`
+    - `insert()`
+    - `print()`
 
 ## To-Do
 
