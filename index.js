@@ -15,15 +15,21 @@ try {
     myList.push(3);
     myList.push(4);
     myList.print();
-    console.log('\n$$$$$$$$$$$$$$ Deleting from begining: ', myList.shift(), '\n');
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.removeAt(2), '\n');
     myList.print();
-    console.log('\n$$$$$$$$$$$$$$ Deleting from begining: ', myList.shift(), '\n');
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.removeAt(1), '\n');
     myList.print();
-    console.log('\n$$$$$$$$$$$$$$ Deleting from begining: ', myList.shift(), '\n');
+    myList.push(5);
     myList.print();
-    console.log('\n$$$$$$$$$$$$$$ Deleting from begining: ', myList.shift(), '\n');
+    myList.insert(2, 1);
     myList.print();
-    console.log('\n$$$$$$$$$$$$$$ Deleting from begining: ', myList.shift(), '\n');
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.removeAt(2), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.removeAt(1), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.removeAt(1), '\n');
+    myList.print();
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.removeAt(0), '\n');
     myList.print();
 }
 catch (error) {

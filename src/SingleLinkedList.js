@@ -36,6 +36,11 @@ var LinkedList = /** @class */ (function () {
         this.head = null;
         this.length = 0;
     }
+    /**********************
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     *⭐    Utilities   ⭐*
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     **********************/
     /**
      * 📜 Checks if the list is empty or not
      *
@@ -77,6 +82,11 @@ var LinkedList = /** @class */ (function () {
     //   // Return node value
     //   return temp;
     // }
+    /**********************
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     *⭐    Adding      ⭐*
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     **********************/
     /**
      * 📜 Adds to the end of the list
      *
@@ -154,6 +164,11 @@ var LinkedList = /** @class */ (function () {
         this.length++;
         return this;
     };
+    /**********************
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     *⭐    Deleteing   ⭐*
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     **********************/
     /**
      * 📜 Removes last node in the list, and return it's value (undefined in case list is empty).
      *
@@ -202,7 +217,7 @@ var LinkedList = /** @class */ (function () {
      *
      * ⏳ Time-Complixty: O(1)
      *
-     * @returns last node in the list
+     * @returns first node in the list
      */
     // TODO: Try to extract deleting logic into a function
     LinkedList.prototype.shift = function () {
@@ -217,6 +232,37 @@ var LinkedList = /** @class */ (function () {
         this.length -= 1;
         return temp;
     };
+    /**
+     * 📜 Removes node at passed index in the list, and return it's value (undefined in case list is empty).
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns deleted node
+     */
+    // TODO: Try to extract deleting logic into a function
+    LinkedList.prototype.removeAt = function (index) {
+        if (index > this.length - 1)
+            throw new RangeError("You can't delete node at index ".concat(index, ", ").concat(this.length === 0
+                ? 'you do not have any nodes'
+                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based"));
+        if (index === 0)
+            return this.shift();
+        if (index === this.length - 1)
+            return this.pop();
+        var iterator = this.head;
+        for (var i = 0; i < index - 1; i++)
+            iterator = iterator.next;
+        var temp = this.deepClone(iterator === null || iterator === void 0 ? void 0 : iterator.next);
+        iterator.next = this.deepClone(temp.next);
+        temp.next = null;
+        this.length -= 1;
+        return temp.value;
+    };
+    /**********************
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     *⭐ Logging & Info⭐*
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     **********************/
     /**
      * Prints all the list
      * O(n) Due to the iteration over all the list
@@ -233,6 +279,16 @@ var LinkedList = /** @class */ (function () {
         console.log("**************");
         console.log('* Your List: *', output);
         console.log("**************");
+    };
+    /**
+     * 📜 Return list size
+     *
+     * ⏳ Time-Complixty: O(1)
+     *
+     * @returns list length
+     */
+    LinkedList.prototype.size = function () {
+        return this.length;
     };
     return LinkedList;
 }());

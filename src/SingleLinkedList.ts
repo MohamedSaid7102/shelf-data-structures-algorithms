@@ -36,6 +36,12 @@ export class LinkedList<T> {
     this.length = 0;
   }
 
+  /**********************
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   *⭐    Utilities   ⭐*
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   **********************/
+
   /**
    * 📜 Checks if the list is empty or not
    *
@@ -81,6 +87,12 @@ export class LinkedList<T> {
   //   // Return node value
   //   return temp;
   // }
+
+  /**********************
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   *⭐    Adding      ⭐*
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   **********************/
 
   /**
    * 📜 Adds to the end of the list
@@ -170,6 +182,12 @@ export class LinkedList<T> {
     return this;
   }
 
+  /**********************
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   *⭐    Deleteing   ⭐*
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   **********************/
+
   /**
    * 📜 Removes last node in the list, and return it's value (undefined in case list is empty).
    *
@@ -218,7 +236,7 @@ export class LinkedList<T> {
    *
    * ⏳ Time-Complixty: O(1)
    *
-   * @returns last node in the list
+   * @returns first node in the list
    */
   // TODO: Try to extract deleting logic into a function
   public shift(): T | undefined {
@@ -230,6 +248,45 @@ export class LinkedList<T> {
     this.length -= 1;
     return temp;
   }
+
+  /**
+   * 📜 Removes node at passed index in the list, and return it's value (undefined in case list is empty).
+   *
+   * ⏳ Time-Complixty: O(n)
+   *
+   * @returns deleted node
+   */
+  // TODO: Try to extract deleting logic into a function
+  public removeAt(index: number): T | undefined {
+    if (index > this.length - 1)
+      throw new RangeError(
+        `You can't delete node at index ${index}, ${
+          this.length === 0
+            ? 'you do not have any nodes'
+            : 'you only have ' + this.length + ' nodes'
+        } || LinkedList is 0 based`
+      );
+
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+
+    let iterator = this.head;
+    for (let i = 0; i < index - 1; i++) iterator = iterator!.next;
+
+    let temp = this.deepClone(iterator?.next);
+
+    iterator!.next = this.deepClone(temp!.next);
+
+    temp!.next = null;
+    this.length -= 1;
+    return temp!.value!;
+  }
+
+  /**********************
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   *⭐ Logging & Info⭐*
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   **********************/
 
   /**
    * Prints all the list
@@ -247,5 +304,16 @@ export class LinkedList<T> {
     console.log(`**************`);
     console.log('* Your List: *', output);
     console.log(`**************`);
+  }
+
+  /**
+   * 📜 Return list size
+   *
+   * ⏳ Time-Complixty: O(1)
+   *
+   * @returns list length
+   */
+  public size() {
+    return this.length;
   }
 }
