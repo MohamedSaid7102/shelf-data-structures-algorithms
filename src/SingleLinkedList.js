@@ -198,6 +198,26 @@ var LinkedList = /** @class */ (function () {
         }
     };
     /**
+     * 📜 Removes first node in the list, and return it's value (undefined in case list is empty).
+     *
+     * ⏳ Time-Complixty: O(1)
+     *
+     * @returns last node in the list
+     */
+    // TODO: Try to extract deleting logic into a function
+    LinkedList.prototype.shift = function () {
+        var _a;
+        if (this.length <= 0)
+            return;
+        var temp = this.deepClone((_a = this.head) === null || _a === void 0 ? void 0 : _a.value);
+        if (this.length == 1)
+            this.head = null;
+        else
+            this.head = this.head.next;
+        this.length -= 1;
+        return temp;
+    };
+    /**
      * Prints all the list
      * O(n) Due to the iteration over all the list
      */

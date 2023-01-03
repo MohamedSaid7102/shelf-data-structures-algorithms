@@ -15,15 +15,35 @@ try {
   myList.push(3);
   myList.push(4);
   myList.print();
-  console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+  console.log(
+    '\n$$$$$$$$$$$$$$ Deleting from begining: ',
+    myList.shift(),
+    '\n'
+  );
   myList.print();
-  console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+  console.log(
+    '\n$$$$$$$$$$$$$$ Deleting from begining: ',
+    myList.shift(),
+    '\n'
+  );
   myList.print();
-  console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+  console.log(
+    '\n$$$$$$$$$$$$$$ Deleting from begining: ',
+    myList.shift(),
+    '\n'
+  );
   myList.print();
-  console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+  console.log(
+    '\n$$$$$$$$$$$$$$ Deleting from begining: ',
+    myList.shift(),
+    '\n'
+  );
   myList.print();
-  console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
+  console.log(
+    '\n$$$$$$$$$$$$$$ Deleting from begining: ',
+    myList.shift(),
+    '\n'
+  );
   myList.print();
 } catch (error) {
   console.log(error);
