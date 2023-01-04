@@ -63,6 +63,18 @@ export class LinkedList<T> {
   }
 
   /**
+   * 📜 Check if 2 nodes have the same values or not
+   *
+   * ⏳ Time-Complixty: O(1)
+   *
+   * @returns <True | False>
+   */
+
+  private isEqual(node1: T, node2: T): boolean {
+    return JSON.stringify(node1) === JSON.stringify(node2);
+  }
+
+  /**
    * 📜 Delete passed node
    *
    * ⏳ Time-Complixty: O(1)
@@ -280,6 +292,49 @@ export class LinkedList<T> {
     temp!.next = null;
     this.length -= 1;
     return temp!.value!;
+  }
+
+
+
+  /**
+   * 📜Removes passed node (By value)
+   *
+   * ⏳ Time-Complixty: O(n)
+   *
+   * @returns deleted node || or undefined if no such node 
+   */
+  // TODO: Try to extract deleting logic into a function
+
+  public remove(node: T): T | undefined {
+
+    if(this.length === 0) return undefined;
+
+    if(this.length === 1) {
+      if(this.isEqual(this.head.value,node)) {
+        this.head = null;
+        this.length-=1;
+        return node
+      }
+      return undefined;
+    }  
+    
+    if(this.length === 2) {
+      if(this.isEqual(this.head.value,node)) {
+        this.head = this.head.next;
+        this.length-=1;
+        return node
+      }
+
+      if(this.isEqual(this.head.next.value,node)) {
+        this.head.next = null;
+        this.length-=1;
+        return node;
+      }
+      return undefined;
+    }
+
+    return undefined;
+    // TODO: Next Time implement looping over the list with 2 pointers and delete
   }
 
   /**********************

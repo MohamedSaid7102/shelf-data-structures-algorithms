@@ -60,6 +60,16 @@ var LinkedList = /** @class */ (function () {
         return JSON.parse(JSON.stringify(value));
     };
     /**
+     * 📜 Check if 2 nodes have the same values or not
+     *
+     * ⏳ Time-Complixty: O(1)
+     *
+     * @returns <True | False>
+     */
+    LinkedList.prototype.isEqual = function (node1, node2) {
+        return JSON.stringify(node1) === JSON.stringify(node2);
+    };
+    /**
      * 📜 Delete passed node
      *
      * ⏳ Time-Complixty: O(1)
@@ -257,6 +267,41 @@ var LinkedList = /** @class */ (function () {
         temp.next = null;
         this.length -= 1;
         return temp.value;
+    };
+    /**
+     * 📜Removes passed node (By value)
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns deleted node || or undefined if no such node
+     */
+    // TODO: Try to extract deleting logic into a function
+    LinkedList.prototype.remove = function (node) {
+        if (this.length === 0)
+            return undefined;
+        if (this.length === 1) {
+            if (this.isEqual(this.head.value, node)) {
+                this.head = null;
+                this.length -= 1;
+                return node;
+            }
+            return undefined;
+        }
+        if (this.length === 2) {
+            if (this.isEqual(this.head.value, node)) {
+                this.head = this.head.next;
+                this.length -= 1;
+                return node;
+            }
+            if (this.isEqual(this.head.next.value, node)) {
+                this.head.next = null;
+                this.length -= 1;
+                return node;
+            }
+            return undefined;
+        }
+        return undefined;
+        // TODO: Next Time implement looping over the list with 2 pointers and delete
     };
     /**********************
      ***⭐⭐⭐⭐⭐⭐⭐⭐**
