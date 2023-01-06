@@ -277,29 +277,52 @@ var LinkedList = /** @class */ (function () {
      */
     // TODO: Try to extract deleting logic into a function
     LinkedList.prototype.remove = function (node) {
+        var _a;
         if (this.length === 0)
             return undefined;
-        if (this.length === 1) {
-            if (this.isEqual(this.head.value, node)) {
-                this.head = null;
-                this.length -= 1;
-                return node;
-            }
-            return undefined;
+        var iterator = this.head;
+        var Nodetemp = this.deepClone(node);
+        //Handle if it is the first node
+        if (this.isEqual(iterator === null || iterator === void 0 ? void 0 : iterator.value, node)) {
+            this.shift();
+            return Nodetemp;
         }
-        if (this.length === 2) {
-            if (this.isEqual(this.head.value, node)) {
-                this.head = this.head.next;
-                this.length -= 1;
-                return node;
+        //Handle if it is at any other index
+        for (var i = 0; i < this.length - 1 && iterator; i++) {
+            if (this.isEqual((_a = iterator === null || iterator === void 0 ? void 0 : iterator.next) === null || _a === void 0 ? void 0 : _a.value, node)) {
+                var temp = this.deepClone(iterator.next);
+                iterator.next = temp.next;
+                temp.next = null;
+                // Decrement the length
+                this.length--;
+                // return the deeply clone of the node
+                return Nodetemp;
             }
-            if (this.isEqual(this.head.next.value, node)) {
-                this.head.next = null;
-                this.length -= 1;
-                return node;
-            }
-            return undefined;
+            iterator = iterator === null || iterator === void 0 ? void 0 : iterator.next;
         }
+        /* if(this.length === 1) {
+          if(this.isEqual(this.head.value,node)) {
+            this.head = null;
+            this.length-=1;
+            return node
+          }
+          return undefined;
+        }
+        
+        if(this.length === 2) {
+          if(this.isEqual(this.head.value,node)) {
+            this.head = this.head.next;
+            this.length-=1;
+            return node
+          }
+    
+          if(this.isEqual(this.head.next.value,node)) {
+            this.head.next = null;
+            this.length-=1;
+            return node;
+          }
+          return undefined;
+        }*/
         return undefined;
         // TODO: Next Time implement looping over the list with 2 pointers and delete
     };
