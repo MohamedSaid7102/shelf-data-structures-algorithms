@@ -306,10 +306,33 @@ export class LinkedList<T> {
   // TODO: Try to extract deleting logic into a function
 
   public remove(node: T): T | undefined {
+    
+    if (this.length === 0) return undefined;
+    let iterator = this.head;
+    let Nodetemp = this.deepClone(node);
 
-    if(this.length === 0) return undefined;
+    //Handle if it is the first node
+    if (this.isEqual(iterator?.value, node)) {
+      this.shift();
+      return Nodetemp;
+    }
 
-    if(this.length === 1) {
+    //Handle if it is at any other index
+    for (let i = 0; i < this.length - 1 && iterator; i++) {
+      if (this.isEqual(iterator?.next?.value, node)) {
+        let temp = this.deepClone(iterator.next);
+        iterator.next = temp.next;
+        temp.next = null;
+
+        // Decrement the length
+        this.length--;
+        // return the deeply clone of the node
+        return Nodetemp;
+      }
+      iterator = iterator?.next;
+    }
+
+    /* if(this.length === 1) {
       if(this.isEqual(this.head.value,node)) {
         this.head = null;
         this.length-=1;
@@ -331,7 +354,7 @@ export class LinkedList<T> {
         return node;
       }
       return undefined;
-    }
+    }*/
 
     return undefined;
     // TODO: Next Time implement looping over the list with 2 pointers and delete

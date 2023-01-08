@@ -5,6 +5,9 @@ try {
     var myList = new SingleLinkedList_1.LinkedList();
     myList.insert('Mohamed', 0);
     myList.insert('Halah', 1);
+    myList.insert("Ahmed", 2);
+    myList.insert("Sarah", 3);
+    myList.insert("Reem", 4);
     myList.print();
     // console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.pop(), '\n');
     // myList.print();
@@ -33,7 +36,9 @@ try {
     // myList.print();
     console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.remove('Mohamed'), '\n');
     myList.print();
-    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.remove('Halah'), '\n');
+    console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.remove('Ahmed'), '\n');
+    myList.print();
+    console.log("\n$$$$$$$$$$$$$$ Deleting: ", myList.remove("Reem"), "\n");
     myList.print();
     console.log('\n$$$$$$$$$$$$$$ Deleting: ', myList.remove('SoSo'), '\n');
     myList.print();
