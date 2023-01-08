@@ -280,14 +280,13 @@ var LinkedList = /** @class */ (function () {
         var _a;
         if (this.length === 0)
             return undefined;
-        var iterator = this.head;
-        var Nodetemp = this.deepClone(node);
         //Handle if it is the first node
-        if (this.isEqual(iterator === null || iterator === void 0 ? void 0 : iterator.value, node)) {
-            this.shift();
-            return Nodetemp;
+        if (this.isEqual(this.head.value, node)) {
+            return this.shift();
         }
         //Handle if it is at any other index
+        var iterator = this.head;
+        var Nodetemp = this.deepClone(node);
         for (var i = 0; i < this.length - 1 && iterator; i++) {
             if (this.isEqual((_a = iterator === null || iterator === void 0 ? void 0 : iterator.next) === null || _a === void 0 ? void 0 : _a.value, node)) {
                 var temp = this.deepClone(iterator.next);
@@ -300,7 +299,9 @@ var LinkedList = /** @class */ (function () {
             }
             iterator = iterator === null || iterator === void 0 ? void 0 : iterator.next;
         }
-        /* if(this.length === 1) {
+        return undefined;
+        /*
+        if(this.length === 1) {
           if(this.isEqual(this.head.value,node)) {
             this.head = null;
             this.length-=1;
@@ -322,8 +323,9 @@ var LinkedList = /** @class */ (function () {
             return node;
           }
           return undefined;
-        }*/
+        }
         return undefined;
+        */
         // TODO: Next Time implement looping over the list with 2 pointers and delete
     };
     /**********************
