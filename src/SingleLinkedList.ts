@@ -9,7 +9,11 @@
  *
  *
  *
+ * Related Links:
  *
+ * 1. Garbage collection in js: https://javascript.info/garbage-collection
+ * 2. delte keyword: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
+ * 3. Memory management in js: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management
  *
  *
  *
@@ -272,10 +276,9 @@ export class LinkedList<T> {
   public removeAt(index: number): T | undefined {
     if (index > this.length - 1)
       throw new RangeError(
-        `You can't delete node at index ${index}, ${
-          this.length === 0
-            ? 'you do not have any nodes'
-            : 'you only have ' + this.length + ' nodes'
+        `You can't delete node at index ${index}, ${this.length === 0
+          ? 'you do not have any nodes'
+          : 'you only have ' + this.length + ' nodes'
         } || LinkedList is 0 based`
       );
 
@@ -294,8 +297,6 @@ export class LinkedList<T> {
     return temp!.value!;
   }
 
-
-
   /**
    * 📜Removes passed node (By value)
    *
@@ -307,34 +308,35 @@ export class LinkedList<T> {
 
   public remove(node: T): T | undefined {
 
-    if(this.length === 0) return undefined;
+    if (this.length === 0) return undefined;
 
-    if(this.length === 1) {
-      if(this.isEqual(this.head.value,node)) {
-        this.head = null;
-        this.length-=1;
-        return node
-      }
-      return undefined;
-    }  
-    
-    if(this.length === 2) {
-      if(this.isEqual(this.head.value,node)) {
-        this.head = this.head.next;
-        this.length-=1;
-        return node
-      }
+    // If this is the first item -> shift & return all the values "Delte first one"
+    if (this.isEqual(this.head!.value!, node)) return this.shift();
 
-      if(this.isEqual(this.head.next.value,node)) {
-        this.head.next = null;
-        this.length-=1;
+    // This is a garding claus & second checker -> because if length == 1 & we didn't return last check, so searchable node is not found
+    // and it's important for upcomming logic because we will set iterator on this.head.next so we have to check first length is >  1
+    if (this.length === 1) return undefined;
+
+    //Handle if it is at any other index 
+    let iterator = this.head!;
+
+    while (iterator.next !== null) {
+      if (this.isEqual(iterator!.next!.value!, node)) {
+        // Delte next node
+        iterator.next = iterator.next.next;
+        // Decrement the length
+        this.length--;
+        // return the deeply clone of the node
         return node;
       }
-      return undefined;
+      iterator = iterator?.next;
     }
 
+    // After exit, we will be at the tail but we didn't check it yet, so let us do this job..!
+    if (this.isEqual(iterator.value!, node)) return this.pop();
+
+    // Other wise, node doesn't exist
     return undefined;
-    // TODO: Next Time implement looping over the list with 2 pointers and delete
   }
 
   /**********************

@@ -18,6 +18,7 @@
     - `unshift()` Removes from the begining
     - `insert()` Adds to passed index
     - `removeAt()` Removes from passed index
+    - `remove()` Removes passed value
     - `print()` Prints the list
     - `size()` Returns list size
 
