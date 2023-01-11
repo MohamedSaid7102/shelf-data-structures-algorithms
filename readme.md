@@ -19,11 +19,13 @@
     - `insert()` Adds to passed index
     - `removeAt()` Removes from passed index
     - `remove()` Removes passed value
+    - `updateNodeWithIndex()` Updates node with passed index
     - `print()` Prints the list
     - `size()` Returns list size
 
 ## To-Do
 
+- negative passed index value for linkedlist operations => perform operation from the end
 - `Stack`
 - `Queus`
 - `Trees`

@@ -255,10 +255,12 @@ var LinkedList = /** @class */ (function () {
      */
     // TODO: Try to extract deleting logic into a function
     LinkedList.prototype.removeAt = function (index) {
+        if (index < 0)
+            throw new RangeError("Invalid passed index < 0");
         if (index > this.length - 1)
             throw new RangeError("You can't delete node at index ".concat(index, ", ").concat(this.length === 0
                 ? 'you do not have any nodes'
-                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based"));
+                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based, ").concat((index == this.length) ? 'to delete last node pass index = ' + (this.length - 1) + ' not ' + this.length + '. ' : ''));
         if (index === 0)
             return this.shift();
         if (index === this.length - 1)
@@ -294,11 +296,7 @@ var LinkedList = /** @class */ (function () {
         var iterator = this.head;
         while (iterator.next !== null) {
             if (this.isEqual(iterator.next.value, node)) {
-                // to reference it on deleting next node
-                //let temp = iterator.next.next;
-                // TODO: Check if this will work: iterator.next = iterator.next.next "This is for deleting next node", if so => delete temp
                 // Delte next node
-                //iterator.next = temp;
                 iterator.next = iterator.next.next;
                 // Decrement the length
                 this.length--;
@@ -312,32 +310,48 @@ var LinkedList = /** @class */ (function () {
             return this.pop();
         // Other wise, node doesn't exist
         return undefined;
-        /*
-        if(this.length === 1) {
-          if(this.isEqual(this.head.value,node)) {
-            this.head = null;
-            this.length-=1;
-            return node
-          }
-          return undefined;
+    };
+    /**********************
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     *⭐   Updating    ⭐*
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     **********************/
+    /**
+     * 📜Updates passed node value
+     *
+     * ⏳ Time-Complixty: O(1)
+     *
+     * @returns old node value || or throw an error if error happened
+     */
+    LinkedList.prototype.updateNodeValue = function (node, newValue) {
+        var returnValue;
+        try {
+            returnValue = this.deepClone(node.value);
+            node.value = newValue;
         }
-        
-        if(this.length === 2) {
-          if(this.isEqual(this.head.value,node)) {
-            this.head = this.head.next;
-            this.length-=1;
-            return node
-          }
-          if(this.isEqual(this.head.next.value,node)) {
-            this.head.next = null;
-            this.length-=1;
-            return node;
-          }
-          return undefined;
+        catch (error) {
+            console.log("Error happened while deleting the node \n", error);
         }
-        return undefined;
-        */
-        // TODO: Next Time implement looping over the list with 2 pointers and delete
+        return returnValue;
+    };
+    /**
+     * 📜Updates passed node (By value)
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns old node || or undefined if no such node
+     */
+    LinkedList.prototype.updateNodeWithIndex = function (index, newValue) {
+        if (index < 0)
+            throw new RangeError("Invalid passed index < 0");
+        if (index > this.length - 1)
+            throw new RangeError("You can't update node at index ".concat(index, ", ").concat(this.length === 0
+                ? 'you do not have any nodes'
+                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based"));
+        var iterator = this.head;
+        for (var i = 0; i < index; i++)
+            iterator = iterator.next;
+        return this.updateNodeValue(iterator, newValue);
     };
     /**********************
      ***⭐⭐⭐⭐⭐⭐⭐⭐**

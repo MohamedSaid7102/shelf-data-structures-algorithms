@@ -78,6 +78,25 @@ export class LinkedList<T> {
     return JSON.stringify(node1) === JSON.stringify(node2);
   }
 
+
+  /**
+   * 📜Updates passed node value
+   *
+   * ⏳ Time-Complixty: O(1)
+   *
+   * @returns old node value || or throw an error if error happened
+   */
+  private updateNodeValue(node: Node<T>, newValue: T): T {
+    let returnValue: T;
+    try {
+      returnValue = this.deepClone(node.value);
+      node.value = newValue;
+    } catch (error) {
+      console.log("Error happened while deleting the node \n", error)
+    }
+    return returnValue!;
+  }
+
   /**
    * 📜 Delete passed node
    *
@@ -274,12 +293,13 @@ export class LinkedList<T> {
    */
   // TODO: Try to extract deleting logic into a function
   public removeAt(index: number): T | undefined {
+    if (index < 0) throw new RangeError("Invalid passed index < 0")
     if (index > this.length - 1)
       throw new RangeError(
         `You can't delete node at index ${index}, ${this.length === 0
           ? 'you do not have any nodes'
           : 'you only have ' + this.length + ' nodes'
-        } || LinkedList is 0 based`
+        } || LinkedList is 0 based, ${(index == this.length) ? 'to delete last node pass index = ' + (this.length - 1) + ' not ' + this.length + '. ' : ''}`
       );
 
     if (index === 0) return this.shift();
@@ -338,6 +358,39 @@ export class LinkedList<T> {
     // Other wise, node doesn't exist
     return undefined;
   }
+
+  /**********************
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   *⭐   Updating    ⭐*
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   **********************/
+
+  /**
+   * 📜Updates passed node (By value)
+   *
+   * ⏳ Time-Complixty: O(n)
+   *
+   * @returns old node || or undefined if no such node 
+   */
+
+  public updateNodeWithIndex(index: number, newValue: T): T | undefined {
+    if (index < 0) throw new RangeError("Invalid passed index < 0")
+
+    if (index > this.length - 1)
+      throw new RangeError(
+        `You can't update node at index ${index}, ${this.length === 0
+          ? 'you do not have any nodes'
+          : 'you only have ' + this.length + ' nodes'
+        } || LinkedList is 0 based`
+      );
+
+    let iterator = this.head;
+
+    for (let i = 0; i < index; i++) iterator = iterator!.next;
+
+    return this.updateNodeValue(iterator!, newValue);
+  }
+
 
   /**********************
    ***⭐⭐⭐⭐⭐⭐⭐⭐**
