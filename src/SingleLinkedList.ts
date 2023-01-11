@@ -366,7 +366,7 @@ export class LinkedList<T> {
    **********************/
 
   /**
-   * 📜Updates passed node (By value)
+   * 📜Updates passed node (By index)
    *
    * ⏳ Time-Complixty: O(n)
    *
@@ -389,6 +389,30 @@ export class LinkedList<T> {
     for (let i = 0; i < index; i++) iterator = iterator!.next;
 
     return this.updateNodeValue(iterator!, newValue);
+  }
+
+  /**
+   * 📜Updates passed node (By value)
+   *
+   * ⏳ Time-Complixty: O(n)
+   *
+   * @returns old node || or undefined if no such node 
+   */
+
+
+  public updateNodeWithValue(value: T, newValue: T): T | undefined {
+    if (this.length === 0) return undefined;
+
+
+
+    //Handle if it is at any other index 
+    let iterator = this.head!;
+
+    while (iterator.next !== null && !this.isEqual(iterator.value!, value)) iterator = iterator.next;
+
+    if (this.isEqual(iterator.value!, value)) return this.updateNodeValue(iterator, newValue);
+
+    return undefined;
   }
 
 

@@ -74,6 +74,24 @@ var LinkedList = /** @class */ (function () {
         return JSON.stringify(node1) === JSON.stringify(node2);
     };
     /**
+     * 📜Updates passed node value
+     *
+     * ⏳ Time-Complixty: O(1)
+     *
+     * @returns old node value || or throw an error if error happened
+     */
+    LinkedList.prototype.updateNodeValue = function (node, newValue) {
+        var returnValue;
+        try {
+            returnValue = this.deepClone(node.value);
+            node.value = newValue;
+        }
+        catch (error) {
+            console.log("Error happened while deleting the node \n", error);
+        }
+        return returnValue;
+    };
+    /**
      * 📜 Delete passed node
      *
      * ⏳ Time-Complixty: O(1)
@@ -317,25 +335,7 @@ var LinkedList = /** @class */ (function () {
      ***⭐⭐⭐⭐⭐⭐⭐⭐**
      **********************/
     /**
-     * 📜Updates passed node value
-     *
-     * ⏳ Time-Complixty: O(1)
-     *
-     * @returns old node value || or throw an error if error happened
-     */
-    LinkedList.prototype.updateNodeValue = function (node, newValue) {
-        var returnValue;
-        try {
-            returnValue = this.deepClone(node.value);
-            node.value = newValue;
-        }
-        catch (error) {
-            console.log("Error happened while deleting the node \n", error);
-        }
-        return returnValue;
-    };
-    /**
-     * 📜Updates passed node (By value)
+     * 📜Updates passed node (By index)
      *
      * ⏳ Time-Complixty: O(n)
      *
@@ -352,6 +352,24 @@ var LinkedList = /** @class */ (function () {
         for (var i = 0; i < index; i++)
             iterator = iterator.next;
         return this.updateNodeValue(iterator, newValue);
+    };
+    /**
+     * 📜Updates passed node (By value)
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns old node || or undefined if no such node
+     */
+    LinkedList.prototype.updateNodeWithValue = function (value, newValue) {
+        if (this.length === 0)
+            return undefined;
+        //Handle if it is at any other index 
+        var iterator = this.head;
+        while (iterator.next !== null && !this.isEqual(iterator.value, value))
+            iterator = iterator.next;
+        if (this.isEqual(iterator.value, value))
+            return this.updateNodeValue(iterator, newValue);
+        return undefined;
     };
     /**********************
      ***⭐⭐⭐⭐⭐⭐⭐⭐**

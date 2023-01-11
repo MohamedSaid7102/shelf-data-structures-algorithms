@@ -20,6 +20,7 @@
     - `removeAt()` Removes from passed index
     - `remove()` Removes passed value
     - `updateNodeWithIndex()` Updates node with passed index
+    - `updateNodeWithValue()` Updates node with passed value
     - `print()` Prints the list
     - `size()` Returns list size
 
