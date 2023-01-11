@@ -78,7 +78,6 @@ export class LinkedList<T> {
     return JSON.stringify(node1) === JSON.stringify(node2);
   }
 
-
   /**
    * 📜Updates passed node value
    *
@@ -92,7 +91,7 @@ export class LinkedList<T> {
       returnValue = this.deepClone(node.value);
       node.value = newValue;
     } catch (error) {
-      console.log("Error happened while deleting the node \n", error)
+      console.log('Error happened while deleting the node \n', error);
     }
     return returnValue!;
   }
@@ -293,13 +292,22 @@ export class LinkedList<T> {
    */
   // TODO: Try to extract deleting logic into a function
   public removeAt(index: number): T | undefined {
-    if (index < 0) throw new RangeError("Invalid passed index < 0")
+    if (index < 0) throw new RangeError('Invalid passed index < 0');
     if (index > this.length - 1)
       throw new RangeError(
-        `You can't delete node at index ${index}, ${this.length === 0
-          ? 'you do not have any nodes'
-          : 'you only have ' + this.length + ' nodes'
-        } || LinkedList is 0 based, ${(index == this.length) ? 'to delete last node pass index = ' + (this.length - 1) + ' not ' + this.length + '. ' : ''}`
+        `You can't delete node at index ${index}, ${
+          this.length === 0
+            ? 'you do not have any nodes'
+            : 'you only have ' + this.length + ' nodes'
+        } || LinkedList is 0 based, ${
+          index == this.length
+            ? 'to delete last node pass index = ' +
+              (this.length - 1) +
+              ' not ' +
+              this.length +
+              '. '
+            : ''
+        }`
       );
 
     if (index === 0) return this.shift();
@@ -322,12 +330,11 @@ export class LinkedList<T> {
    *
    * ⏳ Time-Complixty: O(n)
    *
-   * @returns deleted node || or undefined if no such node 
+   * @returns deleted node || or undefined if no such node
    */
   // TODO: Try to extract deleting logic into a function
 
   public remove(node: T): T | undefined {
-
     if (this.length === 0) return undefined;
 
     // If this is the first item -> shift & return all the values "Delte first one"
@@ -337,7 +344,7 @@ export class LinkedList<T> {
     // and it's important for upcomming logic because we will set iterator on this.head.next so we have to check first length is >  1
     if (this.length === 1) return undefined;
 
-    //Handle if it is at any other index 
+    //Handle if it is at any other index
     let iterator = this.head!;
 
     while (iterator.next !== null) {
@@ -370,17 +377,18 @@ export class LinkedList<T> {
    *
    * ⏳ Time-Complixty: O(n)
    *
-   * @returns old node || or undefined if no such node 
+   * @returns old node || or undefined if no such node
    */
 
   public updateNodeWithIndex(index: number, newValue: T): T | undefined {
-    if (index < 0) throw new RangeError("Invalid passed index < 0")
+    if (index < 0) throw new RangeError('Invalid passed index < 0');
 
     if (index > this.length - 1)
       throw new RangeError(
-        `You can't update node at index ${index}, ${this.length === 0
-          ? 'you do not have any nodes'
-          : 'you only have ' + this.length + ' nodes'
+        `You can't update node at index ${index}, ${
+          this.length === 0
+            ? 'you do not have any nodes'
+            : 'you only have ' + this.length + ' nodes'
         } || LinkedList is 0 based`
       );
 
@@ -396,25 +404,23 @@ export class LinkedList<T> {
    *
    * ⏳ Time-Complixty: O(n)
    *
-   * @returns old node || or undefined if no such node 
+   * @returns old node || or undefined if no such node
    */
-
 
   public updateNodeWithValue(value: T, newValue: T): T | undefined {
     if (this.length === 0) return undefined;
 
-
-
-    //Handle if it is at any other index 
+    //Handle if it is at any other index
     let iterator = this.head!;
 
-    while (iterator.next !== null && !this.isEqual(iterator.value!, value)) iterator = iterator.next;
+    while (iterator.next !== null && !this.isEqual(iterator.value!, value))
+      iterator = iterator.next;
 
-    if (this.isEqual(iterator.value!, value)) return this.updateNodeValue(iterator, newValue);
+    if (this.isEqual(iterator.value!, value))
+      return this.updateNodeValue(iterator, newValue);
 
     return undefined;
   }
-
 
   /**********************
    ***⭐⭐⭐⭐⭐⭐⭐⭐**
