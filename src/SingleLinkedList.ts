@@ -334,17 +334,13 @@ export class LinkedList<T> {
 
   public remove(node: T): T | undefined {
     if (this.length === 0) return undefined;
-
+    
     // If this is the first item -> shift & return all the values "Delte first one"
     if (this.isEqual(this.head!.value!, node)) return this.shift();
-
-    // This is a garding claus & second checker -> because if length == 1 & we didn't return last check, so searchable node is not found
-    // and it's important for upcomming logic because we will set iterator on this.head.next so we have to check first length is >  1
-    if (this.length === 1) return undefined;
-
+    
     //Handle if it is at any other index
     let iterator = this.head!;
-
+    
     while (iterator.next !== null) {
       if (this.isEqual(iterator!.next!.value!, node)) {
         // Delte next node
@@ -356,10 +352,7 @@ export class LinkedList<T> {
       }
       iterator = iterator?.next;
     }
-
-    // After exit, we will be at the tail but we didn't check it yet, so let us do this job..!
-    if (this.isEqual(iterator.value!, node)) return this.pop();
-
+    
     // Other wise, node doesn't exist
     return undefined;
   }
@@ -459,7 +452,7 @@ export class LinkedList<T> {
 
     if (index > this.length - 1)
       throw new RangeError(
-        `You can't update node at index ${index}, ${this.length === 0
+        `You can't search for node at index ${index}, ${this.length === 0
           ? 'you do not have any nodes'
           : 'you only have ' + this.length + ' nodes'
         } || LinkedList is 0 based`
