@@ -446,7 +446,30 @@ export class LinkedList<T> {
     return false;
   }
 
+  /**
+   * 📜Finds node value associated with passed index 
+   *
+   * ⏳ Time-Complixty: O(n)
+   *
+   * @returns: T value assigned to passed index node
+   */
 
+  public at(index: number): T {
+    if (index < 0) throw new RangeError('Invalid passed index < 0');
+
+    if (index > this.length - 1)
+      throw new RangeError(
+        `You can't update node at index ${index}, ${this.length === 0
+          ? 'you do not have any nodes'
+          : 'you only have ' + this.length + ' nodes'
+        } || LinkedList is 0 based`
+      );
+
+    let iterator = this.head!;
+    for (let i = 0; i < index; i++) iterator = iterator!.next!;
+
+    return iterator.value!;
+  }
 
   /**********************
    ***⭐⭐⭐⭐⭐⭐⭐⭐**
