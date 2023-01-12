@@ -295,18 +295,16 @@ export class LinkedList<T> {
     if (index < 0) throw new RangeError('Invalid passed index < 0');
     if (index > this.length - 1)
       throw new RangeError(
-        `You can't delete node at index ${index}, ${
-          this.length === 0
-            ? 'you do not have any nodes'
-            : 'you only have ' + this.length + ' nodes'
-        } || LinkedList is 0 based, ${
-          index == this.length
-            ? 'to delete last node pass index = ' +
-              (this.length - 1) +
-              ' not ' +
-              this.length +
-              '. '
-            : ''
+        `You can't delete node at index ${index}, ${this.length === 0
+          ? 'you do not have any nodes'
+          : 'you only have ' + this.length + ' nodes'
+        } || LinkedList is 0 based, ${index == this.length
+          ? 'to delete last node pass index = ' +
+          (this.length - 1) +
+          ' not ' +
+          this.length +
+          '. '
+          : ''
         }`
       );
 
@@ -385,10 +383,9 @@ export class LinkedList<T> {
 
     if (index > this.length - 1)
       throw new RangeError(
-        `You can't update node at index ${index}, ${
-          this.length === 0
-            ? 'you do not have any nodes'
-            : 'you only have ' + this.length + ' nodes'
+        `You can't update node at index ${index}, ${this.length === 0
+          ? 'you do not have any nodes'
+          : 'you only have ' + this.length + ' nodes'
         } || LinkedList is 0 based`
       );
 
@@ -421,6 +418,35 @@ export class LinkedList<T> {
 
     return undefined;
   }
+
+  /**********************
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   *⭐ Find & Search ⭐*
+   ***⭐⭐⭐⭐⭐⭐⭐⭐**
+   **********************/
+
+
+  /**
+   * 📜Finds if list contain this node
+   *
+   * ⏳ Time-Complixty: O(n)
+   *
+   * @returns Boolean
+   */
+
+  public contains(node: T): Boolean {
+    if (this.length == 0) return false;
+
+    let iterator = this.head!;
+    while (iterator) {
+      if (this.isEqual(iterator!.value!, node)) return true;
+      iterator = iterator.next!;
+    }
+
+    return false;
+  }
+
+
 
   /**********************
    ***⭐⭐⭐⭐⭐⭐⭐⭐**
