@@ -12,7 +12,11 @@ exports.LinkedList = void 0;
  *
  *
  *
+ * Related Links:
  *
+ * 1. Garbage collection in js: https://javascript.info/garbage-collection
+ * 2. delte keyword: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
+ * 3. Memory management in js: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management
  *
  *
  *
@@ -68,6 +72,24 @@ var LinkedList = /** @class */ (function () {
      */
     LinkedList.prototype.isEqual = function (node1, node2) {
         return JSON.stringify(node1) === JSON.stringify(node2);
+    };
+    /**
+     * 📜Updates passed node value
+     *
+     * ⏳ Time-Complixty: O(1)
+     *
+     * @returns old node value || or throw an error if error happened
+     */
+    LinkedList.prototype.updateNodeValue = function (node, newValue) {
+        var returnValue;
+        try {
+            returnValue = this.deepClone(node.value);
+            node.value = newValue;
+        }
+        catch (error) {
+            console.log('Error happened while deleting the node \n', error);
+        }
+        return returnValue;
     };
     /**
      * 📜 Delete passed node
@@ -251,10 +273,18 @@ var LinkedList = /** @class */ (function () {
      */
     // TODO: Try to extract deleting logic into a function
     LinkedList.prototype.removeAt = function (index) {
+        if (index < 0)
+            throw new RangeError('Invalid passed index < 0');
         if (index > this.length - 1)
             throw new RangeError("You can't delete node at index ".concat(index, ", ").concat(this.length === 0
                 ? 'you do not have any nodes'
-                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based"));
+                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based, ").concat(index == this.length
+                ? 'to delete last node pass index = ' +
+                    (this.length - 1) +
+                    ' not ' +
+                    this.length +
+                    '. '
+                : ''));
         if (index === 0)
             return this.shift();
         if (index === this.length - 1)
@@ -277,54 +307,110 @@ var LinkedList = /** @class */ (function () {
      */
     // TODO: Try to extract deleting logic into a function
     LinkedList.prototype.remove = function (node) {
-        var _a;
         if (this.length === 0)
             return undefined;
-        var iterator = this.head;
-        var Nodetemp = this.deepClone(node);
-        //Handle if it is the first node
-        if (this.isEqual(iterator === null || iterator === void 0 ? void 0 : iterator.value, node)) {
-            this.shift();
-            return Nodetemp;
-        }
+        // If this is the first item -> shift & return all the values "Delte first one"
+        if (this.isEqual(this.head.value, node))
+            return this.shift();
         //Handle if it is at any other index
-        for (var i = 0; i < this.length - 1 && iterator; i++) {
-            if (this.isEqual((_a = iterator === null || iterator === void 0 ? void 0 : iterator.next) === null || _a === void 0 ? void 0 : _a.value, node)) {
-                var temp = this.deepClone(iterator.next);
-                iterator.next = temp.next;
-                temp.next = null;
+        var iterator = this.head;
+        while (iterator.next !== null) {
+            if (this.isEqual(iterator.next.value, node)) {
+                // Delte next node
+                iterator.next = iterator.next.next;
                 // Decrement the length
                 this.length--;
                 // return the deeply clone of the node
-                return Nodetemp;
+                return node;
             }
             iterator = iterator === null || iterator === void 0 ? void 0 : iterator.next;
         }
-        /* if(this.length === 1) {
-          if(this.isEqual(this.head.value,node)) {
-            this.head = null;
-            this.length-=1;
-            return node
-          }
-          return undefined;
-        }
-        
-        if(this.length === 2) {
-          if(this.isEqual(this.head.value,node)) {
-            this.head = this.head.next;
-            this.length-=1;
-            return node
-          }
-    
-          if(this.isEqual(this.head.next.value,node)) {
-            this.head.next = null;
-            this.length-=1;
-            return node;
-          }
-          return undefined;
-        }*/
+        // Other wise, node doesn't exist
         return undefined;
-        // TODO: Next Time implement looping over the list with 2 pointers and delete
+    };
+    /**********************
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     *⭐   Updating    ⭐*
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     **********************/
+    /**
+     * 📜Updates passed node (By index)
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns old node || or undefined if no such node
+     */
+    LinkedList.prototype.updateNodeWithIndex = function (index, newValue) {
+        if (index < 0)
+            throw new RangeError('Invalid passed index < 0');
+        if (index > this.length - 1)
+            throw new RangeError("You can't update node at index ".concat(index, ", ").concat(this.length === 0
+                ? 'you do not have any nodes'
+                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based"));
+        var iterator = this.head;
+        for (var i = 0; i < index; i++)
+            iterator = iterator.next;
+        return this.updateNodeValue(iterator, newValue);
+    };
+    /**
+     * 📜Updates passed node (By value)
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns old node || or undefined if no such node
+     */
+    LinkedList.prototype.updateNodeWithValue = function (value, newValue) {
+        if (this.length === 0)
+            return undefined;
+        //Handle if it is at any other index
+        var iterator = this.head;
+        while (iterator.next !== null && !this.isEqual(iterator.value, value))
+            iterator = iterator.next;
+        if (this.isEqual(iterator.value, value))
+            return this.updateNodeValue(iterator, newValue);
+        return undefined;
+    };
+    /**********************
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     *⭐ Find & Search ⭐*
+     ***⭐⭐⭐⭐⭐⭐⭐⭐**
+     **********************/
+    /**
+     * 📜Finds if list contain this node
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns Boolean
+     */
+    LinkedList.prototype.contains = function (node) {
+        if (this.length == 0)
+            return false;
+        var iterator = this.head;
+        while (iterator) {
+            if (this.isEqual(iterator.value, node))
+                return true;
+            iterator = iterator.next;
+        }
+        return false;
+    };
+    /**
+     * 📜Finds node value associated with passed index
+     *
+     * ⏳ Time-Complixty: O(n)
+     *
+     * @returns: T value assigned to passed index node
+     */
+    LinkedList.prototype.at = function (index) {
+        if (index < 0)
+            throw new RangeError('Invalid passed index < 0');
+        if (index > this.length - 1)
+            throw new RangeError("You can't search for node at index ".concat(index, ", ").concat(this.length === 0
+                ? 'you do not have any nodes'
+                : 'you only have ' + this.length + ' nodes', " || LinkedList is 0 based"));
+        var iterator = this.head;
+        for (var i = 0; i < index; i++)
+            iterator = iterator.next;
+        return iterator.value;
     };
     /**********************
      ***⭐⭐⭐⭐⭐⭐⭐⭐**

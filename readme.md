@@ -1,6 +1,10 @@
-# Shelf Data Structures & Algorithms
+# Shelf Data Structures & Algorithms 🧠
 
-## Technologies
+## Contributers 🙏🏻
+
+- Reem Wael 🌸
+
+## Technologies 🧪
 
 - TS
 
@@ -18,6 +22,11 @@
     - `unshift()` Removes from the begining
     - `insert()` Adds to passed index
     - `removeAt()` Removes from passed index
+    - `remove()` Removes passed value
+    - `updateNodeWithIndex()` Updates node with passed index
+    - `updateNodeWithValue()` Updates node with passed value
+    - `contains()` check if list contain a node or not 
+    - `at()` returns value of the node stored at passed index
     - `print()` Prints the list
     - `size()` Returns list size
 
@@ -27,3 +36,7 @@
 - `Queus`
 - `Trees`
 - `Graphs`
+
+## Upcomming features
+
+- negative passed index value for linkedlist operations => perform operation from the end
